@@ -8,7 +8,8 @@ ENV HOME /home/user
 RUN set -eux; \
 	adduser -u 1001 -D -h "$HOME" user; \
 	mkdir "$HOME/.irssi"; \
-	chown -R user:user "$HOME"
+	chown -R user:user "$HOME"; \
+    echo 'mapaddress 10.40.40.40 ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion' >> "${TOR_CONF}"
 
 ENV LANG C.UTF-8
 
