@@ -1,30 +1,34 @@
 Credits to original base project: https://github.com/zuazo/alpine-tor-docker
 
-### Alpine Tor Docker Container for arm64v8
+## Alpine Tor Docker Container for arm64v8
 A minimal arm64v8 [Docker](https://www.docker.com/) image with the [Tor](https://www.torproject.org/) daemon running in the background.
 
-#### Supported Tags and Respective `Dockerfile` Links
+### Supported Tags and Respective `Dockerfile` Links
 
 - `latest` ([*/Dockerfile*](https://github.com/splitstrikestream/arm64v8-alpine-tor-docker/tree/master/Dockerfile))
 
-#### This Container Includes
+### This Container Includes
 
 - [Tor](https://www.torproject.org/).
 - [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html) to run DNS queries through Tor.
 - [ProxyChains-NG](https://github.com/rofl0r/proxychains-ng).
 - `proxychains_wrapper` helper script. See below.
 
-#### How to Use This Image
+### How to Use This Image
 
-##### Download the Image
+#### Build from Sources
 
-    $ docker pull splitstrikestream/arm64v8-alpine-tor
+Instead of installing the image from Docker Hub, you can build the image from sources if you prefer:
 
-##### Run an Application Under Tor
+    $ git clone https://github.com/splitstrikestream/arm-dockerfiles
+    $ cd arm-dockerfiles/arm64v8-alpine-tor
+    $ docker build -t splitstrikestream/arm64v8-alpine-tor .
+
+#### Run an Application Under Tor
 
     $ docker run splitstrikestream/arm64v8-alpine-tor wget -O- https://check.torproject.org/
 
-##### The `proxychains_wrapper` Script
+#### The `proxychains_wrapper` Script
 
 This helper script starts the Tor daemon and runs the command passed in the arguments.
 
@@ -36,7 +40,7 @@ Example:
 
     / # proxychains_wrapper wget -O- https://check.torproject.org/
 
-##### Creating Your Own Images
+#### Creating Your Own Images
 
 You can create your own images with the application that you want to run under Tor.
 
@@ -73,7 +77,7 @@ Then build and run the image:
     Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
     Nmap done: 1 IP address (1 host up) scanned in 19.04 seconds
 
-##### Adding New Proxies to ProxyChains
+#### Adding New Proxies to ProxyChains
 
 ```Dockerfile
 FROM splitstrikestream/arm64v8-alpine-tor
@@ -81,15 +85,7 @@ FROM splitstrikestream/arm64v8-alpine-tor
 RUN echo 'socks4 myproxy.example.com 8080' >> $PROXYCHAINS_CONF
 ```
 
-#### Build from Sources
-
-Instead of installing the image from Docker Hub, you can build the image from sources if you prefer:
-
-    $ git clone https://github.com/splitstrikestream/arm-dockerfiles
-    $ cd arm-dockerfiles/arm64v8-alpine-tor
-    $ docker build -t splitstrikestream/arm64v8-alpine-tor .
-
-#### Read-only Environment Variables Used at Build Time
+### Read-only Environment Variables Used at Build Time
 
 * `DNSMASQ_CONF`: Dnsmasq configuration file path.
 * `DNSMASQ_LOG_DIR`: [`s6-log`](http://skarnet.org/software/s6/s6-log.html) logs directory for the Dnsmasq daemon.
