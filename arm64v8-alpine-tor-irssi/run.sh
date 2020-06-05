@@ -9,10 +9,13 @@ cd ${_ABS_DIRECTORY}
 
 
 [ "$(docker images -q splitstrikestream/arm64v8-alpine-tor-irssi 2> /dev/null)" = "" ] && {
-    echo "Docker image not found locally. Building it..."
-    ./build.sh || {
-        echo "Not possible to build image. Exiting..."
-        exit 1
+    echo "Docker image 'splitstrikestream/arm64v8-alpine-tor-irssi' not found locally. Trying to pull it..."
+    docker pull splitstrikestream/arm64v8-alpine-tor-irssi 2> /dev/null || {
+        echo "Docker image could not be pulled. Building it..."
+        ./build.sh || {
+            echo "Not possible to build image. Exiting..."
+            exit 1
+        }
     }
     echo "Done!"
 }

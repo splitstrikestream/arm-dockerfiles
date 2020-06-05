@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 _REL_DIRECTORY="`dirname \"$0\"`"
 _ABS_DIRECTORY="`( cd \"$_REL_DIRECTORY\" && pwd )`"
